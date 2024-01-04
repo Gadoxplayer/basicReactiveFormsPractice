@@ -9,10 +9,31 @@
               type="text"
               id="username"
               formControlName="username"
-              class="form-control">
+              class="form-control"
+            />
+            <span
+              *ngIf="
+                !signupform.get('userData.username').valid &&
+                signupform.get('userData.username').touched
+              "
+              class="help-block"
+            >
               <span
-                *ngIf="!signupform.get('userData.username').valid && signupform.get('userData.username').touched"
-                class="help-block">Please enter a valid user name</span>
+                *ngIf="
+                  signupform.get('userData.username').errors['nameIsForbbiden']
+                "
+              >
+                This name is invalid! - 
+              </span>
+              <span
+                *ngIf="
+                  signupform.get('userData.username').errors['requiered']
+                "
+              >
+                A name is requiered - 
+              </span>
+              This field is requiered!
+            </span>
           </div>
           <div class="form-group">
             <label for="email">email</label>
@@ -20,34 +41,41 @@
               type="text"
               id="email"
               formControlName="email"
-              class="form-control">
-              <span
-                *ngIf="!signupform.get('userData.email').valid && signupform.get('userData.email').touched"
-                class="help-block">Please enter a valid email</span>
+              class="form-control"
+            />
+            <span
+              *ngIf="
+                !signupform.get('userData.email').valid &&
+                signupform.get('userData.email').touched
+              "
+              class="help-block"
+              >
+              Please enter a valid email
+            </span>
           </div>
         </div>
         <div class="radio" *ngFor="let gender of genders">
           <label>
-            <input
-              type="radio"
-              formControlName="gender"
-              [value]="gender">{{ gender }}
+            <input type="radio" formControlName="gender" [value]="gender" />{{
+              gender
+            }}
           </label>
         </div>
         <div formArrayName="hobbies">
           <h4>Your Hobbies</h4>
-          <button 
-            class="btn btn-default" 
-            type="button" 
-            (click)="onAddHobby()">Add Hobby</button>
-            <div class="form-group"
-              *ngFor="let hobbyControl of getControls(); let i = index">
-              <input type="text" class="form-control" [formControlName]="i">
-            </div>
+          <button class="btn btn-default" type="button" (click)="onAddHobby()">
+            Add Hobby
+          </button>
+          <div
+            class="form-group"
+            *ngFor="let hobbyControl of getControls(); let i = index"
+          >
+            <input type="text" class="form-control" [formControlName]="i" />
+          </div>
         </div>
-        <span
-              *ngIf="!signupform.valid && signupform.touched"
-              class="help-block">Please enter a valid data set</span>
+        <span *ngIf="!signupform.valid && signupform.touched" class="help-block"
+          >Please enter a valid data set</span
+        >
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
     </div>
